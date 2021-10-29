@@ -1,0 +1,8 @@
+#acl snmpagent src all
+#acl community snmp_community public
+#snmp_port 3401
+#snmp_access allow community localhost
+#snmp_access allow community snmpagent
+#snmp_access deny all
+#snmp_incoming_address 0.0.0.0
+#snmp_outgoing_address 0.0.0.0

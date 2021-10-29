@@ -1,0 +1,10 @@
+zone "." IN {
+  type hint;
+  file "named.ca";
+};
+
+zone "thetaru.home" {
+  type forward;
+  forward only;
+  forwarders { 192.168.137.1; 192.168.137.2; };
+};

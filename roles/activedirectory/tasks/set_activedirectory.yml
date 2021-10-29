@@ -1,0 +1,22 @@
+---
+- name: Create new domain (Primary Only)
+  win_domain:
+    dns_domain_name: ad.home
+    #forest_mode: Win2016
+    #domain_mode: Win2016
+    safe_mode_password: "{{ domain_admin_password }}"
+    create_dns_delegation: no
+  notify:
+    - System reboot
+  when: inventory_hostname == 'ad-01'
+
+- name: Additional domain controller (Secondary Only)
+  win_domain_controller:
+    dns_domain_name: ad.home
+    domain_admin_user: "{{ domain_admin_user }}"
+    domain_admin_password: "{{ domain_admin_password }}"
+    safe_mode_password: "{{ domain_admin_password }}"
+    state: domain_controller
+  notify:
+    - System reboot
+  when: inventory_hostname in ['ad-02']

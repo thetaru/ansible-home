@@ -1,0 +1,8 @@
+---
+- name: Install haproxy package
+  yum:
+    name: "{{ item.name }}"
+    state: present
+    releasever: "{{ ansible_distribution_version }}"
+  loop:
+    - { name: haproxy }

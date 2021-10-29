@@ -1,0 +1,8 @@
+---
+- hosts: ntp
+  become: yes
+  roles:
+    - role: linux_common
+      tags: linux_common
+    - role: chrony
+      tags: chrony

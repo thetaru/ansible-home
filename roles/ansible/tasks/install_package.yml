@@ -1,0 +1,17 @@
+---
+- name: Install packages
+  yum:
+    name: "{{ item.name }}"
+    state: present
+  loop:
+    - { name: epel-release }
+    - { name: ansible }
+    - { name: krb5-devel }
+    - { name: krb5-libs }
+    - { name: krb5-workstation }
+    
+- name: Install python package
+  pip:
+    name: "{{ item.name }}"
+  loop:
+    - { name: pywinrm }

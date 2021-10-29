@@ -1,0 +1,10 @@
+---
+- name: Create user
+  user:
+    name: "{{ item.name }}"
+    password: "{{ item.password }}"
+    groups: "{{ item.group }}"
+    shell: "{{ item.shell }}"
+  with_items:
+    - { name: "{{ ansible_user }}", password: "{{ ansible_password | password_hash('sha512', SSH_PASS_SALT) }}", group: wheel, shell: /bin/bash }
+    - { name: "{{ SSH_USER }}", password: "{{ SSH_PASS | password_hash('sha512', SSH_PASS_SALT) }}", group: wheel, shell: /bin/bash }

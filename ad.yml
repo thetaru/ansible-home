@@ -1,0 +1,7 @@
+---
+- hosts: ad
+  roles:
+    - role: windows_common
+      tags: windows_common
+    - role: activedirectory
+      tags: activedirectory

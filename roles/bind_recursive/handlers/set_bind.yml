@@ -1,0 +1,8 @@
+---
+- name: Restart named-chroot
+  service:
+    name: named-chroot
+    state: restarted
+
+- name: Reload named.conf and zone files
+  shell: "rndc reload"

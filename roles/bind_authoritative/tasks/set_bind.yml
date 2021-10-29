@@ -1,0 +1,58 @@
+---
+- name: Create named log directory
+  file:
+    path: /var/named/chroot/var/log/named
+    owner: root
+    group: named
+    mode: 0755
+    state: directory
+
+# Ref: https://github.com/ansible/ansible/issues/30226#
+- name: Create named log files
+  file:
+    path: "{{ item.path }}"
+    owner: named
+    group: named
+    mode: 0644
+    state: touch
+    access_time: preserve
+    modification_time: preserve
+  loop:
+    - { path: /var/named/chroot/var/log/named/default.log }
+    - { path: /var/named/chroot/var/log/named/query.log }
+    - { path: /var/named/chroot/var/log/named/security.log }
+
+- name: Deploy named.conf template
+  template:
+    src: roles/bind_authoritative/templates/named.conf.j2
+    dest: /etc/named.conf
+    owner: root
+    group: named
+    mode: 0640
+    backup: yes
+  notify:
+    - Reload named.conf and zone files
+
+- name: Deploy named.zones template
+  template:
+    src: roles/bind_authoritative/templates/named.zones
+    dest: /var/named/named.zones
+    owner: root
+    group: named
+    mode: 0640
+    backup: yes
+  notify:
+    - Reload named.conf and zone files
+
+- name: Deploy zone files template
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: named
+    mode: 0640
+    backup: yes
+  loop:
+    - { src: 'roles/bind_authoritative/templates/thetaru.home.zone', dest: '/var/named/thetaru.home.zone' }
+  notify:
+    - Reload named.conf and zone files

@@ -1,0 +1,27 @@
+name: "Target Host: ad-01"
+on:
+  workflow_dispatch:
+jobs:
+  ad-01:
+    runs-on: [self-hosted, ansible-01]
+    steps:
+      - uses: actions/checkout@v2
+      - name:  Run Playbook
+        run: |
+          ansible-playbook site.yml \
+            -i inventory \
+            --limit ad-01 \
+            --extra-vars "ansible_connection=winrm" \
+            --extra-vars "ansible_port=5985" \
+            --extra-vars "ansible_winrm_transport=ntlm" \
+            --extra-vars "ansible_winrm_server_cert_validation=ignore" \
+            --extra-vars "ansible_user=${ANSIBLE_USER}" \
+            --extra-vars "ansible_password=${ANSIBLE_PASSWORD}" \
+            --extra-vars "domain_admin_user=${DOMAIN_ADMIN_USER}" \
+            --extra-vars "domain_admin_password=${DOMAIN_ADMIN_PASSWORD}"
+        working-directory: .
+        env:
+          ANSIBLE_USER: ${{ secrets.ANSIBLE_USER_WINDOWS }}
+          ANSIBLE_PASSWORD: ${{ secrets.ANSIBLE_PASSWORD_WINDOWS }}
+          DOMAIN_ADMIN_USER: ${{ secrets.DOMAIN_ADMIN_USER }}
+          DOMAIN_ADMIN_PASSWORD: ${{ secrets.DOMAIN_ADMIN_PASSWORD }}

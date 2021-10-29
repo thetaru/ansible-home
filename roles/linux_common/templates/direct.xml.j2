@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<direct>
+  <!-- Policy -->
+  <rule priority="999" table="filter" ipv="ipv4" chain="INPUT">-j DROP</rule>
+  <rule priority="999" table="filter" ipv="ipv4" chain="OUTPUT">-j ACCEPT</rule>
+  <rule priority="999" table="filter" ipv="ipv4" chain="FORWARD">-j DROP</rule>
+  <!-- Log -->
+  <rule priority="998" table="filter" ipv="ipv4" chain="INPUT">-j LOG --log-prefix 'Denylisted: '</rule>
+  <!-- Common rules -->
+  <rule priority="0" table="filter" ipv="ipv4" chain="INPUT">-i lo -j ACCEPT</rule>
+  <rule priority="0" table="filter" ipv="ipv4" chain="INPUT">-m state --state RELATED,ESTABLISHED -j ACCEPT</rule>
+  <rule priority="0" table="filter" ipv="ipv4" chain="INPUT">-p icmp -j ACCEPT</rule>
+  <!-- Input rules -->
+{% for rule in firewalld.rules %}
+{% if rule is defined %}
+  <rule priority="{{ rule.priority }}" table="filter" ipv="ipv4" chain="INPUT">-s {{ rule.src }} -p {{ rule.protocol }} --dport {{ rule.port }} -j ACCEPT</rule>
+{% endif %}
+{% endfor %}
+</direct>

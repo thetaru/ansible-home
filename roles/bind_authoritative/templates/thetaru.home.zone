@@ -1,0 +1,32 @@
+$ORIGIN thetaru.home.
+$TTL 900       ; 15 min.
+@ IN SOA dns-01.thetaru.home. postmaster.thetaru.home. (
+        2021111901  ; serial (YYYYMMDDNN)
+        3600        ; refresh (1 hour)
+        1200        ; retry (20 min.)
+        1209600     ; expire (2 weeks)
+        900         ; minimum (15 min.)
+        )
+;;
+@          IN  NS      dns-01.thetaru.home.
+@          IN  NS      dns-02.thetaru.home.
+
+dns-01     IN  A       192.168.137.1
+dns-02     IN  A       192.168.137.2
+
+ntp-01     IN  A       192.168.137.5
+ntp-02     IN  A       192.168.137.6
+
+log-01     IN  A       192.168.137.10
+
+proxy-01   IN  A       192.168.137.20
+proxy-02   IN  A       192.168.137.21
+
+lb-01      IN  A       192.168.137.25
+
+zbx-01     IN  A       192.168.137.30
+zbx-02     IN  A       192.168.137.31
+
+mail-01     IN  A       192.168.137.35
+
+ansible-01 IN  A       192.168.138.5

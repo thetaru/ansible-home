@@ -1,0 +1,14 @@
+---
+# Ref: https://ao-zai.blogspot.com/2016/08/windows-server-ntp.html
+- name: Set ntp server
+  win_regedit:
+    path: 'HKLM:\SYSTEM\CurrentControlSet\Services\W32Time\Parameters'
+    name: "{{ item.name }}"
+    data: "{{ item.data }}"
+    type: string
+  loop:
+    - name: NtpServer
+      data: "{{ ntpservers }}"
+    - name: Type
+      data: "{{ synctype }}"
+  notify: Restart w32time

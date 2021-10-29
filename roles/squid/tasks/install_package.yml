@@ -1,0 +1,8 @@
+---
+- name: Install squid package
+  yum:
+    name: "{{ item.name }}"
+    state: present
+    releasever: "{{ ansible_distribution_version }}"
+  loop:
+    - { name: squid }

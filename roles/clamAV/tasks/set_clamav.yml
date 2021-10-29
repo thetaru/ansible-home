@@ -1,0 +1,26 @@
+---
+- name: Deploy scan.conf template
+  template:
+    src: roles/clamAV/templates/scan.conf
+    dest: /etc/clamd.d/scan.conf
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  notify:
+    - Restart clamd@scan
+    - Restart clamav-clamonacc
+    - Restart clamav-freshclam
+
+- name: Deploy freshclam.conf template
+  template:
+    src: roles/clamAV/templates/freshclam.conf
+    dest: /etc/freshclam.conf
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  notify:
+    - Restart clamd@scan
+    - Restart clamav-clamonacc
+    - Restart clamav-freshclam

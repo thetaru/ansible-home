@@ -1,0 +1,19 @@
+---
+- name: Deploy httpd config templates
+  vars:
+    configs:
+      - php.conf
+      - zabbix.conf
+      - 99-common.conf
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  loop:
+    - { src: roles/zabbix/templates/httpd.conf.j2, dest: /etc/httpd/conf/httpd.conf }
+    - { src: roles/zabbix/templates/common.conf, dest: /etc/httpd/conf.d/common.conf }
+  notify:
+    - Restart httpd

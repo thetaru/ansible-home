@@ -1,0 +1,8 @@
+---
+- hosts: lb
+  become: yes
+  roles:
+    - role: linux_common
+      tags: linux_common
+    - role: haproxy
+      tags: haproxy

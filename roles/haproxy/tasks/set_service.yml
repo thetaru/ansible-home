@@ -1,0 +1,6 @@
+---
+- name: Set haproxy service
+  service:
+    name: haproxy
+    state: started
+    enabled: yes

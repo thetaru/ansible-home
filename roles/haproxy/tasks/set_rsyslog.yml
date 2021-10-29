@@ -1,0 +1,19 @@
+---
+- name: Create haproxy Unix domain socket directory
+  file:
+    path: /var/lib/haproxy/dev
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+
+- name: Deploy rsyslog config haproxy template
+  template:
+    src: roles/haproxy/templates/99-haproxy.conf
+    dest: /etc/rsyslog.d/99-haproxy.conf
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  notify:
+    - Restart rsyslog

@@ -1,0 +1,67 @@
+---
+- name: Set postfix main.cf parameters
+  shell: postconf -e "{{ item.parameter }} = {{ item.value }}"
+  loop:
+    - parameter: "myhostname"
+      value: "mail-01.thetaru.home"
+    - parameter: "mydomain"
+      value: "thetaru.home"
+    - parameter: "inet_interfaces"
+      value: "all"
+    - parameter: "inet_protocols"
+      value: "ipv4"
+    - parameter: "mynetworks"
+      value: "127.0.0.1/32, 192.168.137.0/24, 192.168.138.0/24"
+    - parameter: "relayhost"
+      value: "[email-smtp.ap-northeast-1.amazonaws.com]:587"
+    - parameter: "smtpd_banner"
+      value: "$myhostname ESMTP"
+    - parameter: "biff"
+      value: "no"
+    - parameter: "parent_domain_matches_subdomain"
+      value: ""
+    - parameter: "smtp_use_tls"
+      value: "yes"
+    - parameter: "smtpd_helo_required"
+      value: "yes"
+    - parameter: "smtpd_helo_restrictions"
+      value: "permit_mynetworks,reject_unknown_hostname,reject_non_fqdn_hostname,reject_invalid_hostname,permit"
+    - parameter: "smtpd_recipient_restrictions"
+      value: "permit_mynetworks,permit_sasl_authenticated,reject_unauth_destination"
+    - parameter: "smtpd_relay_restrictions"
+      value: "permit_mynetworks,permit_sasl_authenticated,defer_unauth_destination"
+    - parameter: "smtpd_sender_restrictions"
+      value: "permit_mynetworks,reject_unknown_sender_domain,reject_non_fqdn_sender"
+    - parameter: "smtp_sasl_auth_enable"
+      value: "yes"
+    - parameter: "smtp_sasl_password_maps"
+      value: "hash:/etc/postfix/sasl_passwd"
+    - parameter: "smtp_sasl_security_options"
+      value: "noanonymous"
+    - parameter: "smtp_sasl_mechanism_filter"
+      value: "plain"
+  notify:
+    - Restart postfix
+
+- name: Deploy header_checks template
+  template:
+    src: "roles/postfix/templates/header_checks"
+    dest: "/etc/postfix/header_checks"
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  notify:
+    - Restart postfix
+
+- name: Deploy SMTP-AUTH template
+  template:
+    src: "roles/postfix/templates/sasl_passwd.j2"
+    dest: "/etc/postfix/sasl_passwd"
+    owner: root
+    group: root
+    mode: 0600
+    backup: yes
+  notify:
+    - postmap sasl_passwd
+    - Restart postfix

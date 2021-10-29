@@ -1,0 +1,15 @@
+/var/log/server/*/messages
+/var/log/server/*/secure
+/var/log/server/*/cron
+{
+    daily
+    rotate 2
+    dateext
+    compress
+    notifempty
+    missingok
+    sharedscripts
+    postrotate
+        /usr/bin/systemctl kill -s HUP rsyslog.service >/dev/null 2>&1 || true
+    endscript
+}

@@ -1,0 +1,7 @@
+---
+- import_tasks: install_package.yml
+- import_tasks: set_haproxy.yml
+- import_tasks: set_service.yml
+- import_tasks: set_kernelparameters.yml
+- import_tasks: set_logrotate.yml
+- import_tasks: set_rsyslog.yml

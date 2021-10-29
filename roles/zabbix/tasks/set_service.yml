@@ -1,0 +1,11 @@
+---
+- name: Set zabbix services
+  systemd:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+    enabled: "{{ item.enabled }}"
+  loop:
+    - { name: mysqld.service, state: started, enabled: yes }
+    - { name: php-fpm.service, state: started, enabled: yes }
+    - { name: httpd.service, state: started, enabled: yes }
+    - { name: zabbix-server.service, state: started, enabled: yes }

@@ -1,0 +1,38 @@
+---
+- name: Set php.ini
+  ini_file:
+    path: /etc/php.ini
+    state: present
+    section: PHP
+    no_extra_spaces: yes
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  loop:
+    - option: expose_php
+      value: 'Off'
+  notify:
+    - Restart php-fpm
+
+- name: Set php-fpm zabbix.conf
+  ini_file:
+    path: /etc/php-fpm.d/zabbix.conf
+    state: present
+    section: zabbix
+    no_extra_spaces: yes
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  loop:
+    - option: php_value[memory_limit]
+      value: 256M
+    - option: php_value[date.timezone]
+      value: Asia/Tokyo
+  notify:
+    - Restart php-fpm

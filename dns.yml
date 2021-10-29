@@ -1,0 +1,16 @@
+---
+- hosts: dns_authoritative
+  become: yes
+  roles:
+    - role: linux_common
+      tags: linux_common
+    - role: bind_authoritative
+      tags: bind_authoritative
+
+- hosts: dns_recursive
+  become: yes
+  roles:
+    - role: linux_common
+      tags: linux_common
+    - role: bind_recursive
+      tags: bind_recursive

@@ -1,0 +1,90 @@
+acl internalnet {
+  127.0.0.1;
+  192.168.137.0/24;
+  192.168.138.0/24;
+};
+
+include "/etc/rndc.key";
+controls {
+  inet 127.0.0.1 port 953 allow { 127.0.0.1; } keys { "rndc-key"; };
+};
+
+options {
+  version "";
+  hostname "";
+  listen-on port 53 {
+{% for ip_address in named.listen_on %}
+{% if ip_address is defined %}
+    {{ ip_address }};
+{% endif %}
+{% endfor %}
+  };
+  listen-on-v6 port 53 { none; };
+  notify no;
+  directory       "/var/named";
+  dump-file       "/var/named/data/cache_dump.db";
+  statistics-file "/var/named/data/named_stats.txt";
+  memstatistics-file "/var/named/data/named_mem_stats.txt";
+  secroots-file   "/var/named/data/named.secroots";
+  recursing-file  "/var/named/data/named.recursing";
+  
+  allow-query       { internalnet; };
+  allow-query-cache { internalnet; };
+  
+  allow-transfer { none; };
+  allow-update { none; };
+  
+  recursion yes;
+  allow-recursion { internalnet; };
+  
+  max-ncache-ttl 300;
+  max-cache-ttl 3600;
+  recursive-clients 2000;
+  cleaning-interval 3600;
+  max-cache-size 200M;
+  
+  empty-zones-enable yes;
+  
+  dnssec-enable yes;
+  dnssec-validation no;
+  
+  managed-keys-directory "/var/named/dynamic";
+
+  pid-file "/run/named/named.pid";
+  session-keyfile "/run/named/session.key";
+
+  include "/etc/crypto-policies/back-ends/bind.config";
+};
+
+logging {
+  channel default_debug {
+    file "/var/log/named/default.log" versions 5 size 50M;
+    severity dynamic;
+    print-time yes;
+    print-severity yes;
+    print-category yes;
+  };
+  channel queries_log {
+    file "/var/log/named/query.log" versions 5 size 50M;
+    severity info;
+    print-time yes;
+    print-severity yes;
+    print-category yes;
+  };
+  channel security_log {
+    file "/var/log/named/security.log" versions 5 size 50M;
+    severity info;
+    print-time yes;
+    print-severity yes;
+    print-category yes;
+  };
+  
+  category lame-servers { null; };
+  category default { default_debug; };
+  category queries { queries_log; };
+  category security { security_log; };
+};
+
+include "/var/named/named.zones";
+include "/etc/named.rfc1912.zones";
+include "/etc/named.root.key";

@@ -1,0 +1,9 @@
+---
+- name: Deploy logrotate file firewall log templates
+  template:
+    src: roles/linux_common/templates/firewall
+    dest: /etc/logrotate.d/firewall
+    owner: root
+    group: root
+    mode: 0644
+    backup: no

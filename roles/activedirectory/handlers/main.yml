@@ -1,0 +1,3 @@
+---
+- import_tasks: set_ntp.yml
+- import_tasks: system_reboot.yml

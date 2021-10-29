@@ -1,0 +1,10 @@
+---
+- import_tasks: set_dns.yml
+- import_tasks: set_ssh.yml
+- import_tasks: set_chrony.yml
+- import_tasks: set_rsyslog.yml
+- import_tasks: set_firewalld.yml
+- import_tasks: set_journal.yml
+- import_tasks: set_grub.yml
+- import_tasks: systemctl_daemon.yml
+- import_tasks: system_reboot.yml

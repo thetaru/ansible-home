@@ -1,0 +1,14 @@
+/var/log/server/proxy-01/access.log
+/var/log/server/proxy-02/access.log
+{
+    daily
+    rotate 2
+    dateext
+    compress
+    notifempty
+    missingok
+    sharedscripts
+    postrotate
+        /usr/bin/systemctl kill -s HUP rsyslog.service >/dev/null 2>&1 || true
+    endscript
+}

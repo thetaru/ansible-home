@@ -1,0 +1,3 @@
+---
+- name: Import initial schema and data
+  shell: "zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -uzabbix -p{{ ZABBIX_MYSQL_ZABBIX_PASSWORD }} zabbix"

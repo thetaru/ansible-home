@@ -1,0 +1,6 @@
+---
+- name: Set named service
+  service:
+    name: named-chroot
+    state: started
+    enabled: yes

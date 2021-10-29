@@ -1,0 +1,33 @@
+name: "Target Group: zbx"
+on:
+  workflow_dispatch:
+jobs:
+  zbx:
+    runs-on: [self-hosted, ansible-01]
+    steps:
+      - uses: actions/checkout@v2
+      - name:  Run Playbook
+        run: |
+          ansible-playbook site.yml \
+            -i inventory  \
+            --limit zbx \
+            --extra-vars "ansible_user=${ANSIBLE_USER}" \
+            --extra-vars "ansible_password=${ANSIBLE_PASSWORD}" \
+            --extra-vars "ansible_become_password=${SUDO_PASSWORD}" \
+            --extra-vars "SSH_USER=${SSH_USER}" \
+            --extra-vars "SSH_PASS=${SSH_PASS}" \
+            --extra-vars "SSH_PASS_SALT=${SSH_PASS_SALT}" \
+            --extra-vars "ZABBIX_MYSQL_ROOT_PASSWORD"=${ZABBIX_MYSQL_ROOT_PASSWORD} \
+            --extra-vars "ZABBIX_MYSQL_ZABBIX_PASSWORD"=${ZABBIX_MYSQL_ZABBIX_PASSWORD} \
+            --extra-vars "PCSD_HACLUSTER_PASSWORD"=${PCSD_HACLUSTER_PASSWORD}
+        working-directory: .
+        env:
+          SUDO_PASSWORD: ${{ secrets.SUDO_PASSWORD }}
+          ANSIBLE_USER: ${{ secrets.ANSIBLE_USER }}
+          ANSIBLE_PASSWORD: ${{ secrets.ANSIBLE_PASSWORD }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PASS: ${{ secrets.SSH_PASS }}
+          SSH_PASS_SALT: ${{ secrets.SSH_PASS_SALT }}
+          ZABBIX_MYSQL_ROOT_PASSWORD: ${{ secrets.ZABBIX_MYSQL_ROOT_PASSWORD }}
+          ZABBIX_MYSQL_ZABBIX_PASSWORD: ${{ secrets.ZABBIX_MYSQL_ZABBIX_PASSWORD }}
+          PCSD_HACLUSTER_PASSWORD: ${{ secrets.PCSD_HACLUSTER_PASSWORD }}

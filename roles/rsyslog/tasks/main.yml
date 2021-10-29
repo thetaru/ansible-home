@@ -1,0 +1,3 @@
+---
+- import_tasks: set_rsyslog.yml
+- import_tasks: set_logrotate.yml

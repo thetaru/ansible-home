@@ -1,0 +1,14 @@
+---
+- name: Set Filedescriptor
+  ini_file:
+    path: /etc/systemd/system/squid.service.d/override.conf
+    state: present
+    section: Service
+    option: LimitNOFILE
+    value: '60000'
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  notify:
+    - Reload config and Restart squid.service

@@ -1,0 +1,30 @@
+---
+- name: Deploy system-auth template
+  template:
+    src: roles/linux_common/templates/system-auth.j2
+    dest: /etc/authselect/system-auth
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  notify: System reboot
+
+- name: Deploy password-auth template
+  template:
+    src: roles/linux_common/templates/password-auth.j2
+    dest: /etc/authselect/password-auth
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  notify: System reboot
+
+- name: Deploy su template
+  template:
+    src: roles/linux_common/templates/su.j2
+    dest: /etc/pam.d/su
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  notify: System reboot

@@ -1,0 +1,4 @@
+---
+- import_tasks: set_ntp.yml
+- import_tasks: install_feature.yml
+- import_tasks: set_activedirectory.yml

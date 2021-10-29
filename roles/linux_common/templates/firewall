@@ -1,0 +1,11 @@
+/var/log/firewall/firewall.log {
+    daily
+    maxsize 40M
+    dateext
+    dateformat -%Y%m%d-%s
+    missingok
+    rotate 5
+    compress
+    notifempty
+    create 644 root root
+}

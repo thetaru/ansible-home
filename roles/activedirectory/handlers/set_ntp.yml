@@ -1,0 +1,3 @@
+---
+- name: Restart w32time
+  win_shell: Restart-Service -Name w32time

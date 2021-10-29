@@ -1,0 +1,12 @@
+name: "検証用ワークフロー#2"
+on:
+  workflow_dispatch:
+jobs:
+  ansible-01:
+    runs-on: [self-hosted, ansible-01]
+    steps:
+      - uses: actions/checkout@v2
+      - name:  Run Playbook
+        shell: 'script -q -e -c "bash {0}"'
+        run: |
+          perl -E 'say "Is STDOUT a TTY?: ", -t STDOUT ? "yes" : "no"'

@@ -1,0 +1,11 @@
+---
+- name: Install postfix package
+  yum:
+    name: "{{ item.name }}"
+    state: present
+    releasever: "{{ ansible_distribution_version }}"
+  loop:
+    - { name: postfix }
+    - { name: cyrus-sasl }
+    - { name: cyrus-sasl-plain }
+    - { name: cyrus-sasl-devel }

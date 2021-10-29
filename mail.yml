@@ -1,0 +1,8 @@
+---
+- hosts: mail
+  become: yes
+  roles:
+    - role: linux_common
+      tags: linux_common
+    - role: postfix
+      tags: postfix

@@ -1,0 +1,38 @@
+[dns:children]
+dns_authoritative
+dns_recursive
+
+[dns_authoritative]
+dns-01 ansible_host=192.168.137.1
+dns-02 ansible_host=192.168.137.2
+
+[dns_recursive]
+dns-03 ansible_host=192.168.137.3
+
+[ntp]
+ntp-01 ansible_host=192.168.137.5
+ntp-02 ansible_host=192.168.137.6
+
+[log]
+log-01 ansible_host=192.168.137.10
+
+[proxy]
+proxy-01 ansible_host=192.168.137.20
+proxy-02 ansible_host=192.168.137.21
+
+[lb]
+lb-01 ansible_host=192.168.137.25
+
+[zbx]
+zbx-01 ansible_host=192.168.137.30
+zbx-02 ansible_host=192.168.137.31
+
+[mail]
+mail-01 ansible_host=192.168.137.35
+
+[ad]
+ad-01 ansible_host=192.168.138.1
+ad-02 ansible_host=192.168.138.2
+
+[ansible]
+ansible-01 ansible_host=192.168.138.5

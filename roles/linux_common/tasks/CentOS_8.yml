@@ -1,0 +1,22 @@
+---
+- import_tasks: CentOS_8/create_user.yml
+- import_tasks: CentOS_8/set_hostname.yml
+- import_tasks: CentOS_8/set_timezone.yml
+- import_tasks: CentOS_8/restrict_package.yml
+- import_tasks: CentOS_8/install_package.yml
+- import_tasks: CentOS_8/disable_selinux.yml
+- import_tasks: CentOS_8/disable_services.yml
+- import_tasks: CentOS_8/enable_services.yml
+- import_tasks: CentOS_8/set_grub.yml
+- import_tasks: CentOS_8/set_dns.yml
+- import_tasks: CentOS_8/set_chrony.yml
+  when: "'ntp' not in group_names"
+- import_tasks: CentOS_8/set_rsyslog.yml
+  when: "'log' not in group_names"
+- import_tasks: CentOS_8/set_ssh.yml
+- import_tasks: CentOS_8/set_kernelparameters.yml
+- import_tasks: CentOS_8/set_coredump.yml
+- import_tasks: CentOS_8/set_journal.yml
+- import_tasks: CentOS_8/set_logrotate.yml
+- import_tasks: CentOS_8/set_pam.yml
+- import_tasks: CentOS_8/set_firewalld.yml

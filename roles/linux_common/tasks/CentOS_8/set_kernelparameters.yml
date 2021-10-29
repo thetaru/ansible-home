@@ -1,0 +1,16 @@
+---
+- name: Set kernel parameters
+  sysctl:
+    name: '{{ item.name }}'
+    value: '{{ item.value }}'
+    state: '{{ item.state }}'
+    sysctl_file: /etc/sysctl.conf
+    sysctl_set: yes
+    reload: yes
+  with_items:
+    - { name: 'fs.suid_dumpable', value: '2', state: 'present' }
+    - { name: 'kernel.panic', value: '60', state: 'present' }
+    - { name: 'net.ipv6.conf.all.disable_ipv6', value: '1', state: 'absent' }
+    - { name: 'net.ipv6.conf.default.disable_ipv6', value: '1', state: 'absent' }
+    - { name: 'vm.swappiness', value: '1', state: 'present' }
+    - { name: 'vm.panic_on_oom', value: '2', state: 'present' }

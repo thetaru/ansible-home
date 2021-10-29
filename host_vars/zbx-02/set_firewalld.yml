@@ -1,0 +1,44 @@
+---
+firewalld:
+  rules:
+    # ssh
+    - priority: '1'
+      protocol: 'tcp'
+      src: '192.168.137.0/24'
+      port: '22'
+    - priority: '1'
+      protocol: 'tcp'
+      src: '192.168.138.0/24'
+      port: '22'
+    # http
+    - priority: '1'
+      protocol: 'tcp'
+      src: '192.168.137.0/24'
+      port: '80'
+    - priority: '1'
+      protocol: 'tcp'
+      src: '192.168.138.0/24'
+      port: '80'
+    # pcsd web ui
+    - priority: '1'
+      protocol: 'tcp'
+      src: '192.168.137.0/24'
+      port: '2224'
+    - priority: '1'
+      protocol: 'tcp'
+      src: '192.168.138.0/24'
+      port: '2224'
+    # DRBD
+    - priority: '1'
+      protocol: 'tcp'
+      src: '192.168.137.30/32'
+      port: '7789'
+    # zabbix
+    - priority: '1'
+      protocol: 'tcp'
+      src: '192.168.137.0/24'
+      port: '10051'
+    - priority: '1'
+      protocol: 'tcp'
+      src: '192.168.138.0/24'
+      port: '10051'

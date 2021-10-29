@@ -1,0 +1,27 @@
+zone "thetaru.home" {
+  type master;
+  file "thetaru.home.zone";
+  allow-query { internalnet; };
+  allow-transfer { none; };
+  allow-update { none; };
+};
+
+/*
+zone "137.168.192.in-addr.arpa" {
+  type master;
+  file "137.168.192.rev";
+  notify yes;
+  allow-query { localhost; internalnet; };
+  allow-transfer { 192.168.137.2; };
+  allow-update { none; };
+};
+
+zone "138.168.192.in-addr.arpa" {
+  type master;
+  file "138.168.192.rev";
+  notify yes;
+  allow-query { localhost; internalnet; };
+  allow-transfer { 192.168.138.2; };
+  allow-update { none; };
+};
+*/

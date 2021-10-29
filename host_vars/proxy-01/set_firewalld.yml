@@ -1,0 +1,31 @@
+---
+firewalld:
+  rules:
+    # ssh
+    - priority: '1'
+      protocol: 'tcp'
+      src: '192.168.137.0/24'
+      port: '22'
+    - priority: '1'
+      protocol: 'tcp'
+      src: '192.168.138.0/24'
+      port: '22'
+    # squid
+    - priority: '1'
+      protocol: 'tcp'
+      src: '192.168.137.0/24'
+      port: '8081'
+    - priority: '1'
+      protocol: 'tcp'
+      src: '192.168.138.0/24'
+      port: '8081'
+    # zabbix agent
+    - priority: '1'
+      protocol: 'tcp'
+      src: '192.168.137.254/32,192.168.138.254/32'
+      port: '10050'
+    # snmp
+    - priority: '1'
+      protocol: 'udp'
+      src: '192.168.137.254/32,192.168.138.254/32'
+      port: '3401'

@@ -1,0 +1,15 @@
+---
+- name: Install packages
+  yum:
+    name: "{{ item.name }}"
+    state: present
+    releasever: "{{ ansible_distribution_version }}"
+  loop:
+    - { name: bind-utils }
+    - { name: lsof }
+    - { name: net-tools }
+    - { name: perf }
+    - { name: sysstat }
+    - { name: strace }
+    - { name: tmux }
+    - { name: yum-utils }

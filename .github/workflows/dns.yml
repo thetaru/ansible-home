@@ -1,0 +1,27 @@
+name: "Target Group: dns"
+on:
+  workflow_dispatch:
+jobs:
+  dns:
+    runs-on: [self-hosted, ansible-01]
+    steps:
+      - uses: actions/checkout@v2
+      - name:  Run Playbook
+        run: |
+          ansible-playbook site.yml \
+            -i inventory  \
+            --limit dns \
+            --extra-vars "ansible_user=${ANSIBLE_USER}" \
+            --extra-vars "ansible_password=${ANSIBLE_PASSWORD}" \
+            --extra-vars "ansible_become_password=${SUDO_PASSWORD}" \
+            --extra-vars "SSH_USER=${SSH_USER}" \
+            --extra-vars "SSH_PASS=${SSH_PASS}" \
+            --extra-vars "SSH_PASS_SALT=${SSH_PASS_SALT}"
+        working-directory: .
+        env:
+          SUDO_PASSWORD: ${{ secrets.SUDO_PASSWORD }}
+          ANSIBLE_USER: ${{ secrets.ANSIBLE_USER }}
+          ANSIBLE_PASSWORD: ${{ secrets.ANSIBLE_PASSWORD }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PASS: ${{ secrets.SSH_PASS }}
+          SSH_PASS_SALT: ${{ secrets.SSH_PASS_SALT }}

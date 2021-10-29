@@ -1,0 +1,10 @@
+---
+- import_playbook: ansible.yml
+- import_playbook: dns.yml
+- import_playbook: ntp.yml
+- import_playbook: proxy.yml
+- import_playbook: lb.yml
+- import_playbook: log.yml
+- import_playbook: zbx.yml
+- import_playbook: mail.yml
+- import_playbook: ad.yml

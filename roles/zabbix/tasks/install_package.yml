@@ -1,0 +1,32 @@
+---
+- name: Add zabbix repository
+  yum_repository:
+    name: "{{ item.name }}"
+    description: "{{ item.desc }}"
+    baseurl: "{{ item.baseurl }}"
+    gpgcheck: no
+    enabled: no
+  loop:
+    - name: zabbix
+      desc: Zabbix Official Repository - $basearch
+      baseurl: "http://repo.zabbix.com/zabbix/5.0/rhel/8/$basearch/"
+    - name: zabbix-non-supported
+      desc: Zabbix Official Repository non-supported - $basearch
+      baseurl: "http://repo.zabbix.com/non-supported/rhel/8/$basearch/"
+
+- name: Install zabbix package
+  yum:
+    name: "{{ item.name }}"
+    enablerepo: zabbix,zabbix-non-supported
+    disable_excludes: main
+    state: present
+    releasever: "{{ ansible_distribution_version }}"
+  loop:
+    - { name: httpd }
+    - { name: mysql-server }
+    - { name: python3-PyMySQL }
+    - { name: zabbix-server-mysql }
+    - { name: zabbix-web-mysql }
+    - { name: zabbix-web-japanese }
+    - { name: zabbix-apache-conf }
+    - { name: zabbix-agent }

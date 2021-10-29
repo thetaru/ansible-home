@@ -1,0 +1,12 @@
+---
+- name: Deploy logrotate file templates
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0644
+    backup: no
+  loop:
+    - {src: roles/rsyslog/templates/00-squid, dest: /etc/logrotate.d/00-squid }
+    - {src: roles/rsyslog/templates/99-common, dest: /etc/logrotate.d/99-common }

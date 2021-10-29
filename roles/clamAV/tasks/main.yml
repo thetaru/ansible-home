@@ -1,0 +1,4 @@
+---
+- import_tasks: install_package.yml
+- import_tasks: set_clamav.yml
+- import_tasks: set_service.yml

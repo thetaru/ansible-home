@@ -1,0 +1,4 @@
+---
+- import_tasks: set_zabbix.yml
+- import_tasks: set_mysql.yml
+- import_tasks: set_httpd.yml

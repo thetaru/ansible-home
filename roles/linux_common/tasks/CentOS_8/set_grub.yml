@@ -1,0 +1,14 @@
+---
+- name: Set grub config file
+  blockinfile:
+    path: /etc/default/grub
+    state: present
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+    insertafter: '^GRUB_CMDLINE_LINUX="crashkernel=auto resume=UUID=.* rhgb quiet"$'
+    block: 'GRUB_CMDLINE_LINUX="$GRUB_CMDLINE_LINUX ipv6.disable=1"'
+  notify:
+    - grub2-mkconfig
+    - System reboot

@@ -1,0 +1,6 @@
+---
+- name: Set squid service
+  service:
+    name: squid
+    state: started
+    enabled: yes

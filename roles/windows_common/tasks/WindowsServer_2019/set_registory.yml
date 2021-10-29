@@ -1,0 +1,43 @@
+---
+# Ref: https://docs.microsoft.com/ja-jp/windows/privacy/manage-connections-from-windows-operating-system-components-to-microsoft-services
+- name: Set registory
+  win_regedit:
+    path: "{{ item.path }}"
+    name: "{{ item.name }}"
+    data: "{{ item.data }}"
+    type: "{{ item.type }}"
+  loop:
+    # Cortanaと検索
+    - { path: 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search', name: AllowCortana, data: 1, type: dword }
+    - { path: 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search', name: AllowSearchToUseLocation, data: 1, type: dword }
+    - { path: 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search', name: DisableWebSearch, data: 1, type: dword }
+    - { path: 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search', name: ConnectedSearchUseWeb, data: 0, type: dword }
+    # プライバシーとセキュリティ
+    ## フィードバックを求められる頻度
+    - { path: 'HKCU:\Software\Microsoft\Siuf\Rules', name: PeriodInNanoSeconds, data: 0, type: dword }
+    - { path: 'HKCU:\Software\Microsoft\Siuf\Rules', name: NumberOfSIUFInPeriod, data: 0, type: dword }
+    ## デバイスのデータを Microsoft に送信する
+    - { path: 'HKLM:\Software\Policies\Microsoft\Windows\DataCollection', name: AllowTelemetry, data: 0, type: dword }
+    # エクスプローラー
+    ## フォルダーオプション
+    - { path: 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced', name: LaunchTo, data: 1, type: dword }
+    - { path: 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced', name: AlwaysShowMenus, data: 1, type: dword }
+    - { path: 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced', name: HideFileExt, data: 0, type: dword }
+    - { path: 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\AutoplayHandlers', name: DisableAutoplay, data: 1, type: dword }
+    # システムのプロパティ
+    ## ハードウェア > デバイスのインストール設定
+    - { path: 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DriverSearching', name: SearchOrderConfig, data: 0, type: dword }
+    - { path: 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DriverSearching', name: DriverUpdateWizardWuSearchEnabled, data: 0, type: dword }
+    - { path: 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Device Metadata', name: PreventDeviceMetadataFromNetwork, data: 1, type: dword }
+    ## リモート > リモートデスクトップ
+    - { path: 'HKLM:\SYSTEM\ControlSet001\Control\Terminal Server', name: fDenyTSConnections, data: 0, type: dword }
+    - { path: 'HKLM:\SYSTEM\ControlSet001\Control\Terminal Server\WinStations\RDP-Tcp', name: UserAuthentication, data: 1, type: dword }
+    # サーバーマネージャー
+    - { path: 'HKLM:\SOFTWARE\Microsoft\ServerManager', name: DoNotOpenServerManagerAtLogon, data: 1, type: dword }
+    # IPv6の無効化
+    - { path: 'HKLM:\SYSTEM\CurrentControlSet\services\TCPIP6\Parameters', name: DisabledComponents, data: 0xff, type: dword }
+    # リモートデスクトップ制限の解除
+    - { path: 'HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server', name: fSingleSessionPerUser, data: 0, type: dword }
+    # 組織名/所有者名の設定
+    - { path: 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion', name: RegisteredOrganization, data: "おうち", type: expandstring }
+    - { path: 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion', name: RegisteredOwner, data: "thetaru", type: expandstring }

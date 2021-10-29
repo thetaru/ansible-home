@@ -1,0 +1,5 @@
+---
+- name: System reboot
+  shell: "(sleep 15 && systemctl reboot) &"
+  async: 1
+  poll: 0

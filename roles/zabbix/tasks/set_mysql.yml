@@ -1,0 +1,67 @@
+---
+- name: Start mysqld service
+  systemd:
+    name: mysqld.service
+    state: started
+    enabled: yes
+
+- name: mysql secure installation
+  block:
+    - name: Set root password
+      mysql_user:
+        name: root
+        host: localhost
+        password: "{{ ZABBIX_MYSQL_ROOT_PASSWORD }}"
+      notify:
+        - Restart mysqld
+
+    - name: Create /root/.my.cnf
+      template:
+        src: roles/zabbix/templates/.my.cnf.j2
+        dest: /root/.my.cnf
+        owner: root
+        group: root
+        mode: 0644
+        backup: no
+
+    - name: Remove anonymous users
+      mysql_user:
+        name: ''
+        host_all: yes
+        state: absent
+      notify:
+        - Restart mysqld
+
+    - name: Disallow root login remotely
+      mysql_user:
+        name: root
+        host: "{{ inventory_hostname }}"
+        state: absent
+      notify:
+        - Restart mysqld
+
+    - name: Remove test database and access to it
+      mysql_db:
+        name: test
+        state: absent
+      notify:
+        - Restart mysqld
+
+- name: Create initial database
+  block:
+    - name: Create zabbix database
+      mysql_db:
+        name: zabbix
+        encoding: utf8
+        collation: utf8_bin
+        state: present
+      notify: Import initial schema and data
+
+    - name: Create zabbix user
+      mysql_user:
+        name: zabbix
+        host: localhost
+        password: "{{ ZABBIX_MYSQL_ZABBIX_PASSWORD }}"
+        priv: 'zabbix.*:ALL,GRANT'
+        state: present
+      notify: Import initial schema and data

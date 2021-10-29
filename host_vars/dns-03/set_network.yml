@@ -1,0 +1,21 @@
+---
+connections:
+  - name: ens192
+    type: ethernet
+    ifname: ens192
+    autoconnect: yes
+    ipv4:
+      method: manual
+      dns: ''
+      addresses: 192.168.137.3
+      subnet_mask: 24
+      gateway: 192.168.137.254
+      routes: ''
+      never_default: no
+      may_fail: no
+    ipv6:
+      method: disabled
+      dns: ''
+      addresses: ''
+      gateway: ''
+    state: present

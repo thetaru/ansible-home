@@ -1,0 +1,8 @@
+---
+- hosts: log
+  become: yes
+  roles:
+    - role: linux_common
+      tags: linux_common
+    - role: rsyslog
+      tags: rsyslog

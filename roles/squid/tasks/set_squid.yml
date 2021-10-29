@@ -1,0 +1,34 @@
+---
+- name: Deploy squid.conf templates
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  loop:
+    - { src: roles/squid/templates/squid.conf.j2, dest: /etc/squid/squid.conf }
+  notify:
+    - Reload squid
+    
+- name: Make squid config directory
+  file:
+    path: /etc/squid/conf.d/
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Copy squid config
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  loop:
+    - { src: roles/squid/templates/common.conf, dest: /etc/squid/conf.d/common.conf }
+  notify:
+    - Reload squid

@@ -1,0 +1,8 @@
+---
+- import_tasks: WindowsServer_2019/set_hostname.yml
+- import_tasks: WindowsServer_2019/set_pagingfile.yml
+- import_tasks: WindowsServer_2019/set_memorydump.yml
+- import_tasks: WindowsServer_2019/set_ntp.yml
+  when: "'ad' not in group_names"
+- import_tasks: WindowsServer_2019/set_registory.yml
+- import_tasks: WindowsServer_2019/disable_services.yml

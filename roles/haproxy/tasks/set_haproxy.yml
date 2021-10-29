@@ -1,0 +1,11 @@
+---
+- name: Deploy haproxy.cfg template
+  template:
+    src: roles/haproxy/templates/haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  notify:
+    - Restart haproxy

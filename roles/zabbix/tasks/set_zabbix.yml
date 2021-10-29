@@ -1,0 +1,13 @@
+---
+- name: Deploy zabbix.conf templates
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  loop:
+    - { src: roles/zabbix/templates/zabbix_server.conf.j2, dest: /etc/zabbix/zabbix_server.conf }
+  notify:
+    - Restart zabbix-server

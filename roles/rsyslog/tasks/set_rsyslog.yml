@@ -1,0 +1,25 @@
+---
+- name: Deploy rsyslog.conf template
+  template:
+    src: roles/rsyslog/templates/rsyslog.conf.j2
+    dest: /etc/rsyslog.conf
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  notify:
+    - Restart rsyslog
+
+- name: Deploy rsyslog include config template
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  loop:
+    - { src: roles/rsyslog/templates/00-squid.conf, dest: /etc/rsyslog.d/00-squid.conf }
+    - { src: roles/rsyslog/templates/99-common.conf, dest: /etc/rsyslog.d/99-common.conf }
+  notify:
+    - Restart rsyslog

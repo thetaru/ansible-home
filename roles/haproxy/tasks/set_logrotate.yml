@@ -1,0 +1,9 @@
+---
+- name: Deploy logrotate file haproxy templates
+  template:
+    src: roles/haproxy/templates/haproxy
+    dest: /etc/logrotate.d/haproxy
+    owner: root
+    group: root
+    mode: 0644
+    backup: no

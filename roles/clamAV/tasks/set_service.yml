@@ -1,0 +1,10 @@
+---
+- name: Set clamAV services
+  service:
+    name: "{{ item.name }}"
+    state: started
+    enabled: yes
+  loop:
+    - { name: clamd@scan }
+    - { name: clamav-clamonacc }
+    - { name: clamav-freshclam }

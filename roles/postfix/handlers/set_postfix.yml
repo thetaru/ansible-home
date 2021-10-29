@@ -1,0 +1,17 @@
+---
+- name: Restart postfix
+  service:
+    name: postfix
+    state: restarted
+
+- name: postmap canonical
+  shell: postmap /etc/postfix/canonical
+
+- name: postmap relay_recipients
+  shell: postmap /etc/postfix/relay_recipients
+
+- name: postmap transport
+  shell: postmap /etc/postfix/transport
+
+- name: postmap sasl_passwd
+  shell: postmap /etc/postfix/sasl_passwd && chmod 600 /etc/postfix/sasl_passwd.db

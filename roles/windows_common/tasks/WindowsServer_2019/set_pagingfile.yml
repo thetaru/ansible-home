@@ -1,0 +1,10 @@
+---
+- name: Set pagingfile
+  win_pagefile:
+    drive: C
+    automatic: no
+    initial_size: "{{ ansible_memtotal_mb + 300 }}"
+    maximum_size: "{{ ansible_memtotal_mb + 300 }}"
+    override: no
+    state: present
+  notify: System reboot

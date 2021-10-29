@@ -1,0 +1,4 @@
+---
+- import_tasks: install_package.yml
+- import_tasks: set_bind.yml
+- import_tasks: set_service.yml

@@ -1,0 +1,14 @@
+- name: Restart clamd@scan
+  service:
+    name: clamd@scan
+    state: restarted
+    
+- name: Restart clamav-clamonacc
+  service:
+    name: clamav-clamonacc
+    state: restarted
+
+- name: Restart clamav-freshclam
+  service:
+    name: clamav-freshclam
+    state: restarted

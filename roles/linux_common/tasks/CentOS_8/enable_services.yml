@@ -1,0 +1,9 @@
+---
+- name: Enable services
+  systemd:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+    enabled: "{{ item.enabled }}"
+  loop:
+    - { name: chronyd.service, state: started, enabled: yes }
+    - { name: firewalld.service, state: started, enabled: yes }

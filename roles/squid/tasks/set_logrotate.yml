@@ -1,0 +1,9 @@
+---
+- name: Deploy logrotate file squid templates
+  template:
+    src: roles/squid/templates/squid
+    dest: /etc/logrotate.d/squid
+    owner: root
+    group: root
+    mode: 0644
+    backup: no

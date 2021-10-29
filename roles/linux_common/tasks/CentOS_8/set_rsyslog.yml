@@ -1,0 +1,11 @@
+---
+- name: Deploy rsyslog.conf template
+  template:
+    src: roles/linux_common/templates/rsyslog.conf.j2
+    dest: /etc/rsyslog.conf
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  notify:
+    - Restart rsyslog

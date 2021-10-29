@@ -1,0 +1,12 @@
+---
+- name: Install windows features
+  win_feature:
+    name: "{{ item.name }}"
+    state: present
+    include_sub_features: yes
+    include_management_tools: yes
+  loop:
+    - { name: AD-Domain-Services }
+    - { name: DNS }
+  notify:
+    - System reboot

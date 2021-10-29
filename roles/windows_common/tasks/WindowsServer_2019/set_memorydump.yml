@@ -1,0 +1,21 @@
+---
+- name: Set Memory dump
+  vars:
+    # 搭載メモリが32GB以上 => アクティブメモリダンプ
+    #            32GB未満 => 自動メモリダンプ
+    - _CrashDumpEnabled: "{{ '7' if (ansible_memtotal_mb > 32768) else '1' }}"
+    - _FilterPages: "{{ '1' if (_CrashDumpEnabled == '1') else '0' }}"
+  win_regedit:
+    path: "{{ item.path }}"
+    name: "{{ item.name }}"
+    data: "{{ item.data }}"
+    type: "{{ item.type }}"
+  loop:
+    - path: 'HKLM:\System\CurrentControlSet\Control\CrashControl'
+      name: CrashDumpEnabled
+      data: "{{ _CrashDumpEnabled }}"
+      type: dword
+    - path: 'HKLM:\System\CurrentControlSet\Control\CrashControl'
+      name: FilterPages
+      data: "{{ _FilterPages }}"
+      type: dword

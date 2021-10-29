@@ -1,0 +1,11 @@
+---
+- name: Deploy rsyslog config squid template
+  template:
+    src: roles/squid/templates/99-squid.conf
+    dest: /etc/rsyslog.d/99-squid.conf
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  notify:
+    - Restart rsyslog

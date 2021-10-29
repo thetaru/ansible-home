@@ -1,0 +1,12 @@
+---
+- name: Disable services
+  systemd:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+    enabled: "{{ item.enabled }}"
+  loop:
+    - { name: atd.service, state: stopped, enabled: no }
+    - { name: mdmonitor.service, state: stopped, enabled: no }
+    - { name: smartd.service, state: stopped, enabled: no }
+    - { name: tuned.service, state: stopped, enabled: no }
+    - { name: vdo.service, state: stopped, enabled: no }

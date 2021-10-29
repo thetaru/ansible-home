@@ -1,0 +1,9 @@
+{% for nameserver in resolv.nameservers %}
+nameserver {{ nameserver }}
+{% endfor %}
+{% if resolv.domain is defined %}
+domain {{ resolv.domain }}
+{% endif %}
+{% if resolv.searchs is defined %}
+search {% for search in resolv.searchs %}{{ search }} {% endfor %}
+{% endif %}

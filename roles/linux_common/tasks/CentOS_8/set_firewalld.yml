@@ -1,0 +1,21 @@
+- name: Deploy firewall.conf template
+  template:
+    src: roles/linux_common/templates/firewalld.conf
+    dest: /etc/firewalld/firewalld.conf
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  notify:
+    - Restart firewalld
+
+- name: Deploy direct.xml template
+  template:
+    src: roles/linux_common/templates/direct.xml.j2
+    dest: /etc/firewalld/direct.xml
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  notify:
+    - Restart firewalld
